@@ -1,0 +1,15 @@
+{
+  "name": "acme-hr-cli",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "JoseRodriguez",
+  "type": "module",
+  "main": "main.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
