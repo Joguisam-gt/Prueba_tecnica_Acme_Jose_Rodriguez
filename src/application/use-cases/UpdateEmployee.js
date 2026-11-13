@@ -1,6 +1,6 @@
 /*
- * Permite reportar si el UUID proporcionado no existe o si el cambio de
- * identificación entra en conflicto con otro empleado ya registrado.
+- Permite reportar si el UUID proporcionado no existe o si el cambio de
+- identificación entra en conflicto con otro empleado ya registrado.
  */
 import {
     DuplicateEmployeeError,
@@ -9,8 +9,8 @@ import {
 } from '../../domain/errors/DomainErrors.js';
 
 /*
- * Localiza al empleado mediante su UUID interno, aplica los cambios solicitados
- * revalidando todas las reglas de negocio (RN-01 a RN-05) y persiste el cambio.
+- Localiza al empleado mediante su UUID interno, aplica los cambios solicitados
+- revalidando todas las reglas de negocio (RN-01 a RN-05) y persiste el cambio.
  */
 export class UpdateEmployee {
     #employeeRepository;
@@ -20,10 +20,10 @@ export class UpdateEmployee {
     }
 
     /* 
-     * 1. Valida que se envíe un UUID y que exista en el repositorio.
-     * 2. Si se intenta cambiar la identificación, comprueba que no esté en uso.
-     * 3. Usa employee.withUpdates(newData) para revalidar RN-01..05 y conservar
-     *    el mismo UUID original antes de guardar en el repositorio.
+- Valida que se envíe un UUID y que exista en el repositorio.
+- 2. Si se intenta cambiar la identificación, comprueba que no esté en uso.
+- 3. Usa employee.withUpdates(newData) para revalidar RN-01..05 y conservar
+-    el mismo UUID original antes de guardar en el repositorio.
      */
     execute(id, newData) {
         if (typeof id !== 'string' || id.trim().length === 0) {
@@ -44,6 +44,7 @@ export class UpdateEmployee {
 
         const updatedEmployee = currentEmployee.withUpdates(newData);
         this.#employeeRepository.update(updatedEmployee);
+        this.#employeeRepository.update(currentEmployee.id, updatedEmployee); // <-- AGREGAR ESTA LÍNEA
         return updatedEmployee.toPrimitives();
     }
 }
