@@ -1,5 +1,6 @@
 /*
- * Conecta Infraestructura, Aplicación y Presentación usando ES Modules.
+ * Conecta Infraestructura, Aplicación (incluyendo FindEmployeeByIdentification)
+ * y Presentación mediante ES Modules con extensiones explícitas (.js).
  */
 import process from 'node:process';
 import { InMemoryEmployeeRepository } from './infrastructure/persistence/InMemoryEmployeeRepository.js';
@@ -12,9 +13,9 @@ import { ConsoleUI } from './presentation/ConsoleUI.js';
 import { EmployeeMenuController } from './presentation/EmployeeMenuController.js';
 
 /*
- * Ensambla todas las dependencias siguiendo el principio DIP: si mañana ACME
- * cambia el arreglo en memoria por una base de datos, solo se modifica la
- * instancia de 'repository' en este constructor.
+ * Actúa como Composition Root (principio DIP): instancia el repositorio en
+ * memoria y lo inyecta en cada caso de uso, conectando FindEmployeeByIdentification
+ * bajo la clave 'findEmployee' para resolver el requerimiento RF-03.
  */
 export class AcmeApplication {
     #ui;
@@ -36,10 +37,10 @@ export class AcmeApplication {
         this.#registerShutdownHooks();
     }
 
-    /*
-     * Captura la combinación Ctrl+C para cerrar readline ordenadamente sin
-     * dejar procesos colgados ni volcados de pila abruptos.
-     */
+    /* --------------------------------------------------------------------------
+     * BLOQUE 3: Protección Contra Interrupciones de Terminal (SIGINT)
+     * Captura Ctrl+C para cerrar readline ordenadamente sin cierres abruptos.
+     * -------------------------------------------------------------------------- */
     #registerShutdownHooks() {
         process.on('SIGINT', () => {
             this.#ui.printInfo('Interrupción detectada (Ctrl+C). Cerrando aplicación de forma segura...');
@@ -48,9 +49,10 @@ export class AcmeApplication {
         });
     }
 
-    /* 
+    /* --------------------------------------------------------------------------
+     * BLOQUE 4: Ejecución del Ciclo de Vida de la Aplicación
      * Inicia el bucle interactivo del menú principal.
-     */
+     * -------------------------------------------------------------------------- */
     async run() {
         await this.#menuController.start();
     }
