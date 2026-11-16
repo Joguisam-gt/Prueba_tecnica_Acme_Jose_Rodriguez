@@ -5,11 +5,15 @@
   "license": "ISC",
   "author": "JoseRodriguez",
   "type": "module",
-  "main": "main.js",
+  "main": "src/main.js",
   "directories": {
     "test": "tests"
   },
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/main.js",
+    "test": "node --test tests/*.test.js"
   }
 }

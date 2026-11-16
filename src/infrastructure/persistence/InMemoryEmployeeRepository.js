@@ -15,7 +15,6 @@ export class InMemoryEmployeeRepository extends EmployeeRepository {
     #employees = [];
 
     /* 
-     * BLOQUE 3: Guardar Empleado (save)
      * Inserta una instancia válida de Employee dentro del arreglo interno y la
      * retorna para confirmar su almacenamiento.
      */
@@ -25,7 +24,6 @@ export class InMemoryEmployeeRepository extends EmployeeRepository {
     }
 
     /* 
-     * BLOQUE 4: Listar Todos los Empleados (findAll)
      * Devuelve una copia superficial ([...this.#employees]) del arreglo. De esta
      * forma, si una capa externa hace .push() o .pop() sobre el resultado, el
      * almacenamiento original permanece protegido contra mutaciones accidentales.
@@ -53,11 +51,10 @@ export class InMemoryEmployeeRepository extends EmployeeRepository {
         return this.#employees.find((emp) => emp.identificacion === normalized) ?? null;
     }
 
-    /* --------------------------------------------------------------------------
-     * BLOQUE 7: Actualizar Registro Existente (update)
+    /* 
      * Busca la posición del empleado por su UUID; si existe, reemplaza la
      * instancia anterior por la nueva versión validada y la retorna.
-     * -------------------------------------------------------------------------- */
+     */
     update(updatedEmployee) {
         const index = this.#employees.findIndex((emp) => emp.id === updatedEmployee.id);
         if (index === -1) return null;
